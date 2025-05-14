@@ -34,7 +34,7 @@ async function createUser(user) {
     
     
     localStorage.setItem("username", await data.username)
-    alert("Sucessfly Signed In");
+    alert("Successfully Signed In");
     window.location.href = "../";
     
   } catch (error) {
