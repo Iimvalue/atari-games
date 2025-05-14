@@ -33,12 +33,12 @@ class Particle {
     }
     ripple() {
         if (this.radius < 50) {
-            this.radius += 0.5;
+            this.radius += 0.7;
             this.x -= 0.03;
             this.y -= 0.03;
         }
         if (this.opacity > 0) {
-            this.opacity -= 0.009;
+            this.opacity -= 0.02;
         }
     }
 
@@ -62,7 +62,9 @@ function handleParticles() {
             particlesArray.unshift(new Particle(frogger.x, frogger.y));
         }
     }
+}
 
+    function handleRipples() {  
     //water ripples
 
     for (let i = 0; i < ripplesArray.length; i++) {
@@ -81,4 +83,4 @@ function handleParticles() {
             ripplesArray.unshift(new Particle(frogger.x, frogger.y));
         }
     }
-}
+}   
