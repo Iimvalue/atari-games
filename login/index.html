@@ -113,6 +113,19 @@
                 transform: translateY(-20px);
             }
         }
+
+        .guest {
+            color: aliceblue;
+            text-align: center;
+            font-size: 12px;
+            text-decoration: none;
+            transition: .3s;
+            opacity: 0.8;
+        }
+
+        .guest:active {
+            opacity: 1;
+        }
     </style>
 </head>
 
@@ -123,12 +136,13 @@
     <img class="mario-star"
         src="https://png.pngtree.com/png-vector/20240709/ourmid/pngtree-smiling-cartoon-star-from-super-mario-bros-png-image_13002063.png">
     <div class="login-container">
-        <h2>LOGIN</h2>
+        <h2>SIGNUP</h2>
         <form id="register">
             <input type="text" id="username" placeholder="Username" required />
             <input type="password" id="password" placeholder="Password" required />
             <button type="submit">LOG IN</button>
             <p id="message" style="text-align: center; color: red; font-size: 13px;"></p>
+            <a href="../index.html" class="guest">Continue as a guest</a>
         </form>
     </div>
 
