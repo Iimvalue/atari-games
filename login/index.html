@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/10928/10928949.png" type="image/x-icon">
+    <title>Space Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+            background: radial-gradient(ellipse at bottom, #0b0f2a 0%, #000000 100%);
+            color: white;
+            overflow: hidden;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.2;
+        }
+
+        .planet {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background:
+                url("https://static.vecteezy.com/system/resources/previews/027/294/895/non_2x/imaginative-and-lovable-game-character-for-tshirt-graphic-generative-ai-free-png.png");
+            top: 40px;
+            left: 40px;
+        }
+
+        .mario-star {
+            position: absolute;
+            left: 1%;
+            top: 2%;
+            width: 200px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .mario-star2 {
+            position: absolute;
+            width: 150px;
+            bottom: 10px;
+            right: 60px;
+            animation: float 4s ease-in-out infinite;
+            animation-delay: .5s;
+        }
+
+        .login-container {
+            position: relative;
+            z-index: 1;
+            max-width: 360px;
+            margin: 10vh auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .login-container h2 {
+            text-align: center;
+            color: #00ffff;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: rgba(0, 0, 0, 0.4);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .login-container input:focus {
+            outline: 2px solid #00ffff;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            background: #00ffff;
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-container button:hover {
+            background: #00c2c2;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stars"></div>
+    <div class="planet"></div>
+    <img class="mario-star2" src="https://freepnglogo.com/images/all_img/1732523927_mario-png.png">
+    <img class="mario-star"
+        src="https://png.pngtree.com/png-vector/20240709/ourmid/pngtree-smiling-cartoon-star-from-super-mario-bros-png-image_13002063.png">
+    <div class="login-container">
+        <h2>LOGIN</h2>
+        <form id="register">
+            <input type="text" id="username" placeholder="Username" required />
+            <input type="password" id="password" placeholder="Password" required />
+            <button type="submit">LOG IN</button>
+            <p id="message" style="text-align: center; color: red; font-size: 13px;"></p>
+        </form>
+    </div>
+
+
+    <script>
+        if (user) {
+            setTimeout(() => {
+                window.location.href = "games /.html"
+            }, 2000)
+        }
+    </script>
+</body>
+
+</html>

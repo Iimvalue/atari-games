@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    <link href="./style.css" rel="stylesheet" />
+    <title>Tuwaiq Arcade</title>
+</head>
+
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="register.html">Sign in</a></li>
+            <li><a href="register.html">Sign Up</a></li>
+            <li><a href="">Profile</a></li>
+        </ul>
+    </nav>
+
+    <h2 class="headTitle">Welcome to Tuwaiq-Arcade <span>👾</span></h2>
+    <div class="container">
+        <div class="card" style="color: #ee0979;">
+            <div class="imgBx">
+                <dotlottie-player src="https://lottie.host/c8f1d618-ba21-4225-92e9-4b707fc39146/BCIA9JbUhT.lottie"
+                    background="transparent" speed="1" loop autoplay></dotlottie-player>
+            </div>
+            <div class="content">
+                <h2>BREAKOUT GAME</h2>
+                <br>
+                <p> Rerum nam delectus dolorem officiis autem nulla maiores deserunt, quis temporibus necessitatibus
+                    adipisci sequi suscipit, ex similique quam. Perspiciatis vero expedita doloremque?</p>
+                <a href="#" class="btn btn2">Play</a>
+            </div>
+        </div>
+        <div class="card" style="color: #ff6a00;">
+            <div class="imgBx">
+                <dotlottie-player src="https://lottie.host/7b1b4f5b-fa8c-4bd5-97a8-621971e22231/YlRGNN8qpo.lottie"
+                    speed="1" loop autoplay></dotlottie-player>
+            </div>
+            <div class="content">
+                <h2>FROG GAME</h2>
+                <br>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum nam delectus dolorem officiis autem
+                    nulla maiores deserunt, quis temporibus necessitatibus adipisci sequi suscipit, ex similique quam.
+                    Perspiciatis vero expedita doloremque?</p>
+                <a href="#" class="btn btn1">Play</a>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+    <script>
+        const numBalls = 20;
+        for (let i = 0; i < numBalls; i++) {
+            const ball = document.createElement('div');
+            ball.classList.add('ball');
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            const
+                hue = Math.floor(Math.random() * 360);
+            const delay = (Math.random() * 2).toFixed(2);
+            ball.style.left = `${x}px`;
+            ball.style.top = `${y}px`;
+            ball.style.setProperty('--hue', hue);
+            ball.style.animationDelay = `${delay}s`;
+            document.body.appendChild(ball);
+        }
+    </script>
+</body>
+
+</html>
