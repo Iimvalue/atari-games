@@ -1,37 +1,89 @@
 const canvas = document.getElementById("myCanvas");
-const ctx    = canvas.getContext("2d");
+const ctx = canvas.getContext("2d");
 
 // —— Game State ——
-let gameStarted    = false;
-let ballRadius     = 10;
-let level          = 1;
-let maxLevel       = 3;
+let gameStarted = false;
+let ballRadius = 10;
+let level;
+let maxLevel = 3;
 
-let x              = canvas.width / 2;
-let y              = canvas.height - 30;
-let dx             = 2;
-let dy             = -2;
-let paddleHeight   = 10;
-let paddleWidth    = 75;
-let paddleX        = (canvas.width - paddleWidth) / 2;
-let paddleSpeed    = 8;
-let rightPressed   = false;
-let leftPressed    = false;
-let score          = 0;
-let lives          = 3;
+let x;
+let y;
+let dx = 2;
+let dy = -2;
+let paddleHeight = 10;
+let paddleWidth;
+let paddleX;
+let paddleSpeed;
+let rightPressed = false;
+let leftPressed = false;
+let score;
+let lives;
 
 // —— Bricks setup ——
-const brickRowCount    = 1;
-const brickColumnCount = 1;
-const brickWidth       = 100;
-const brickHeight      = 20;
-const brickPadding     = 10;
-const brickOffsetTop   = 30;
-const brickOffsetLeft  = 30;
-const bricksColors     = ["#ff91b2","#ffc0cb","#ffe4e1","#91e5d6","#4cd5db"];
+const brickRowCount = 5;
+const brickColumnCount = 3;
+const brickWidth = 100;
+const brickHeight = 20;
+const brickPadding = 10;
+const brickOffsetTop = 30;
+const brickOffsetLeft = 30;
+const bricksColors = ["#ff91b2", "#ffc0cb", "#ffe4e1", "#91e5d6", "#4cd5db"];
 
-let bricks = [];
-initBricks();
+let bricks;
+
+function setPaddleProperties() {
+  if (level === 1) {
+    paddleWidth = 75;
+    paddleSpeed = 8;
+  } else if (level === 2) {
+    paddleWidth = 60;
+    paddleSpeed = 10;
+  } else if (level === 3) {
+    paddleWidth = 45;
+    paddleSpeed = 12;
+  }
+}
+
+function saveState() {
+  const state = {
+    level: level,
+    score: score,
+    lives: lives,
+    bricks: bricks.map(column => column.map(brick => ({ status: brick.status, color: brick.color })))
+  };
+  localStorage.setItem('breakout-state', JSON.stringify(state));
+}
+
+function loadState() {
+  const savedState = localStorage.getItem('breakout-state');
+  if (savedState) {
+    const state = JSON.parse(savedState);
+    level = state.level;
+    score = state.score;
+    lives = state.lives;
+    bricks = [];
+    for (let c = 0; c < brickColumnCount; c++) {
+      bricks[c] = [];
+      for (let r = 0; r < brickRowCount; r++) {
+        bricks[c][r] = {
+          x: 0,
+          y: 0,
+          status: state.bricks[c][r].status,
+          color: state.bricks[c][r].color
+        };
+      }
+    }
+  } else {
+    level = 1;
+    score = 0;
+    lives = 3;
+    bricks = [];
+    initBricks();
+  }
+  setPaddleProperties();
+  resetBallAndPaddle();
+}
 
 function initBricks() {
   bricks = [];
@@ -48,14 +100,13 @@ function initBricks() {
   }
 }
 
-// —— Input Handlers ——
 document.addEventListener("keydown", e => {
   if (e.key === "ArrowRight") rightPressed = true;
-  if (e.key === "ArrowLeft")  leftPressed  = true;
+  if (e.key === "ArrowLeft") leftPressed = true;
 });
 document.addEventListener("keyup", e => {
   if (e.key === "ArrowRight") rightPressed = false;
-  if (e.key === "ArrowLeft")  leftPressed  = false;
+  if (e.key === "ArrowLeft") leftPressed = false;
 });
 document.addEventListener("mousemove", e => {
   const relX = e.clientX - canvas.offsetLeft;
@@ -64,7 +115,6 @@ document.addEventListener("mousemove", e => {
   }
 });
 
-// —— Collision Detection ——
 function collisionDetection() {
   for (let c = 0; c < brickColumnCount; c++) {
     for (let r = 0; r < brickRowCount; r++) {
@@ -75,13 +125,12 @@ function collisionDetection() {
         dy = -dy;
         b.status = 0;
         score++;
-        // Play sound if available
         const sound = document.getElementById("sond");
         if (sound) sound.play();
-        // Check if level completed
+        saveState();
         if (score === brickRowCount * brickColumnCount) {
           if (level < maxLevel) {
-            let nextLevelMessage = "CONGRATULATIONS!\nYOU COMPLETED LEVEL ${level}!\n";
+            let nextLevelMessage = `CONGRATULATIONS!\nYOU COMPLETED LEVEL ${level}!\n`;
             if (level + 1 === 2) {
               nextLevelMessage += "\nLEVEL 2: The paddle will be smaller and faster.";
             } else if (level + 1 === 3) {
@@ -100,7 +149,6 @@ function collisionDetection() {
   }
 }
 
-// —— Draw Functions ——
 function drawBricks() {
   for (let c = 0; c < brickColumnCount; c++) {
     for (let r = 0; r < brickRowCount; r++) {
@@ -149,7 +197,7 @@ function drawLives() {
 function drawLevel() {
   ctx.font = "16px Arial";
   ctx.fillStyle = "#0095DD";
-  ctx.fillText("Level: " + level, canvas.width/2 - 30, 20);
+  ctx.fillText("Level: " + level, canvas.width / 2 - 30, 20);
 }
 
 function drawStartScreen() {
@@ -159,7 +207,6 @@ function drawStartScreen() {
   ctx.fillText("Click Anywhere to Start", 170, canvas.height / 2);
 }
 
-// —— Message Display Function ——
 function showMessage(message, callback) {
   gameStarted = false;
   const messageMarker = document.createElement("div");
@@ -175,9 +222,9 @@ function showMessage(message, callback) {
   ctx.textAlign = "center";
 
   const lines = message.split('\n');
-  let yPos = canvas.height/2 - ((lines.length - 1) * 30);
+  let yPos = canvas.height / 2 - ((lines.length - 1) * 30);
   lines.forEach(line => {
-    ctx.fillText(line, canvas.width/2, yPos);
+    ctx.fillText(line, canvas.width / 2, yPos);
     yPos += 30;
   });
 
@@ -191,12 +238,12 @@ function showMessage(message, callback) {
     ctx.fillStyle = "#FFFFFF";
     ctx.textAlign = "center";
 
-    let innerY = canvas.height/2 - ((lines.length - 1) * 30);
+    let innerY = canvas.height / 2 - ((lines.length - 1) * 30);
     lines.forEach(line => {
-      ctx.fillText(line, canvas.width/2, innerY);
+      ctx.fillText(line, canvas.width / 2, innerY);
       innerY += 30;
     });
-    ctx.fillText("Click to continue...", canvas.width/2, innerY + 20);
+    ctx.fillText("Click to continue...", canvas.width / 2, innerY + 20);
   }, 2000);
 
   const clickHandler = () => {
@@ -209,21 +256,14 @@ function showMessage(message, callback) {
   canvas.addEventListener("click", clickHandler);
 }
 
-// —— Level Progression ——
 function nextLevel() {
   resetBallAndPaddle();
   initBricks();
   score = 0;
-  if (level === 2) {
-    paddleWidth = 60;
-    paddleSpeed = 10;
-  } else if (level === 3) {
-    paddleWidth = 45;
-    paddleSpeed = 12;
-  }
+  setPaddleProperties();
+  saveState();
 }
 
-// —— Reset Helpers ——
 function resetBallAndPaddle() {
   x = canvas.width / 2;
   y = canvas.height - 30;
@@ -233,16 +273,15 @@ function resetBallAndPaddle() {
 }
 
 function resetGame() {
+  localStorage.removeItem('breakout-state');
   level = 1;
   lives = 3;
   score = 0;
-  paddleWidth = 75;
-  paddleSpeed = 8;
+  setPaddleProperties();
   resetBallAndPaddle();
   initBricks();
 }
 
-// —— Main Loop ——
 function draw() {
   if (gameStarted) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -254,7 +293,6 @@ function draw() {
     drawLevel();
     collisionDetection();
 
-    // walls & paddle collisions & lives logic
     if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) dx = -dx;
     if (y + dy < ballRadius) dy = -dy;
     else if (y + dy > canvas.height - ballRadius) {
@@ -265,6 +303,7 @@ function draw() {
           showMessage("GAME OVER", resetGame);
         } else {
           resetBallAndPaddle();
+          saveState();
         }
       }
     }
@@ -283,17 +322,11 @@ function draw() {
   requestAnimationFrame(draw);
 }
 
-// —— Start Game on Click ——
 canvas.addEventListener("click", () => {
-  if (!gameStarted && level === 1 && score === 0 && lives === 3) {
+  if (!gameStarted) {
     gameStarted = true;
-    resetBallAndPaddle();
   }
 });
 
-// —— Initial Render ——
+loadState();
 draw();
-
-
-
-
