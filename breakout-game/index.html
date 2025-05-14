@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Stack Game</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: #1f1f1f;
+            cursor: none;
+
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        canvas {
+            border-radius: 9px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)),
+                url("retro.jpg");
+
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <canvas id="myCanvas" width="580" height="535">
+    </canvas>
+    <audio src="success.wav" id="sond" preload="auto"></audio>
+    <script src="main.js"></script>
+
+</body>
+
+</html>
