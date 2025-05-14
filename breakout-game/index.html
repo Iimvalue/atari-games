@@ -1,49 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Stack Game</title>
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SBreakout Game</title>
+    <link rel="stylesheet" href="style.css" />
     <style>
-        body {
-            background: #1f1f1f;
-            cursor: none;
+      body {
+        background: #1f1f1f;
+        cursor: none;
+      }
 
-        }
+      * {
+        padding: 0;
+        margin: 0;
+      }
 
-        * {
-            padding: 0;
-            margin: 0;
-        }
+      canvas {
+        border-radius: 9px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.6),
+            rgba(0, 0, 0, 0.4)
+          ),
+          url("retro.jpg");
 
-        canvas {
-            border-radius: 9px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)),
-                url("retro.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
 
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
+        display: block;
+        margin: 0 auto;
+      }
+      nav {
+    position: fixed;
+    display: flex;
+    height: 3rem;
+    align-items: center;
+    justify-content: center;
+    width: 25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid hsl(0, 0%, 30%);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 50px;
+    top: 10px;
+    
+}
 
-            display: block;
-            margin: 0 auto;
-        }
+nav ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    list-style: none;
+
+}
+
+nav ul li a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #fff;
+    transition: 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ee0979;
+    background: linear-gradient(to right, #ee0979, #ff6a00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
+    <div style="width: 100%; display: flex; justify-content: center;">
+        <nav>
+            <ul>
+              <li><a href="../">Home</a></li>
+              <li><a href="../frog-game/">Frog Game</a></li>
+            </ul>
+          </nav>
+    </div>
+    
 
-
-    <canvas id="myCanvas" width="580" height="535">
-    </canvas>
+    <canvas id="myCanvas" width="580" height="535"> </canvas>
     <audio src="success.wav" id="sond" preload="auto"></audio>
     <script src="main.js"></script>
-
-</body>
-
+  </body>
 </html>

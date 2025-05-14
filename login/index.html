@@ -118,7 +118,6 @@
             color: aliceblue;
             text-align: center;
             font-size: 12px;
-            text-decoration: none;
             transition: .3s;
             opacity: 0.8;
         }
@@ -140,20 +139,14 @@
         <form id="register">
             <input type="text" id="username" placeholder="Username" required />
             <input type="password" id="password" placeholder="Password" required />
-            <button type="submit">LOG IN</button>
+            <button id="submit">SIGN IN / SIGN UP</button>
             <p id="message" style="text-align: center; color: red; font-size: 13px;"></p>
-            <a href="../index.html" class="guest">Continue as a guest</a>
+            <a href="../index.html" id="guestId" class="guest">Continue as a guest</a>
         </form>
     </div>
 
 
-    <script>
-        if (user) {
-            setTimeout(() => {
-                window.location.href = "games /.html"
-            }, 2000)
-        }
-    </script>
+    <script src="./script.js"></script>
 </body>
 
 </html>
